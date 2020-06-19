@@ -1,24 +1,6 @@
-# do-score
-
-## Project setup
-```
-yarn install
+### Default express server host of this project
+```js
+const ExpressServer = url => 'http://localhost:3000' + url;
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**This Project is always build before push to git.**
