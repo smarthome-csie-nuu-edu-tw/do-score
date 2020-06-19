@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+    # mongodb資料庫
+    # In your application container, use the hostname mongodb to connect to the MongoDB server
+    mongodb:
+      image: 'bitnami/mongodb:latest'
+      networks:
+        - app-tier
+    myapp:
+      image: 'YOUR_APPLICATION_IMAGE'
+      networks:
+        - app-tier
