@@ -14,8 +14,13 @@ yarn express:run
 ```
 
 ### Default express server host of this project
-```js
-const ExpressServer = url => 'http://localhost:3000' + url;
+```
+http://localhost:3000
+```
+
+### Default MongoDB host of this project
+```
+mongodb://localhost:27017/do_score
 ```
 
 **This Project is always build before push to git.**
