@@ -4,7 +4,7 @@ services:
     # mongodb資料庫
     # In your application container, use the hostname mongodb to connect to the MongoDB server
     mongodb:
-      image: 'bitnami/mongodb:latest'
+      image: 'bitnami/mongodb:4.2'
       environment:
         - ALLOW_EMPTY_PASSWORD=yes
         - MONGODB_ENABLE_IPV6=false
@@ -24,7 +24,7 @@ services:
             - SKIP_BOWER_INSTALL=0
         depends_on:
             - mongodb
-        #ports:
-        #    - 3000:3000
+        ports:
+            - 3000:3000
         volumes:
             - .:/app
