@@ -1,0 +1,35 @@
+# 使用 Node 的版本
+FROM node:12.18.3-stretch
+
+# Node 環境設定為 production
+ENV NODE_ENV development
+
+# Node 在容器內的位置
+WORKDIR /usr/src/app
+
+# 複製網站內容程式碼
+COPY ./* /user/src/app/
+
+# 複製 package 設定
+#COPY ["package.json", "yarn.lock", "./"]
+
+RUN yarn global add @vue/cli
+RUN vue --version
+
+# Project setup
+RUN yarn install 
+
+# Run express server (Production mode)
+#RUN yarn express:run
+
+# Build (Production mode)
+#RUN yarn build
+
+# 安裝必要的套件並移動到專案的 node_modules 底下
+#RUN yarn --production --silent && mv node_modules ../
+
+# 開放對外的 port
+EXPOSE 3000
+
+# 執行專案
+CMD yarn express:run

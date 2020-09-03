@@ -9,22 +9,36 @@ services:
         - ALLOW_EMPTY_PASSWORD=yes
         - MONGODB_ENABLE_IPV6=false
 
-    express:
+    backend-api:
         tty: true # Enables debugging capabilities when attached to this container.
-        image: 'docker.io/bitnami/express:4-debian-10'
-        command: npm start
+        build: ./Dockerfile.backend-api
+        image: 'do-score-master-hw:backend-api'
+        #command: npm start
         environment:
             - PORT=3000
             - NODE_ENV=development
             - DATABASE_URL=mongodb://mongodb:27017/do_score
-
             - SKIP_DB_WAIT=0
             - SKIP_DB_MIGRATION=0
             - SKIP_NPM_INSTALL=0
             - SKIP_BOWER_INSTALL=0
         depends_on:
             - mongodb
-        ports:
-            - 3000:3000
-        volumes:
-            - .:/app
+        expose:
+            - 3000
+
+    apache-web:
+        tty: true # Enables debugging capabilities when attached to this container.
+        build: ./
+        image: 'do-score-master-hw:web'
+        environment:
+            - PORT=3000
+            - NODE_ENV=development
+            - SKIP_DB_WAIT=0
+            - SKIP_DB_MIGRATION=0
+            - SKIP_NPM_INSTALL=0
+            - SKIP_BOWER_INSTALL=0
+        depends_on:
+            - mongodb
+        expose:
+            - 8089
