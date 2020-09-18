@@ -8,9 +8,12 @@ import router_group from "./routes/api/group";
 
 import mongooseInit from "./mongoose/init.js";
 
+import path from 'path';
+
 export default (app, http) => {
   mongooseInit();
 
+  app.use(express.static('dist'));
   app.use(history({
     index: '/dist/index.html',
     rewrites: [{
@@ -18,11 +21,10 @@ export default (app, http) => {
       to: context => context.parsedUrl.pathname
     }]
   }));
-  app.use(express.static('dist'));
   app.use(express.json());
-  app.use(cors({
-    origin: 'http://localhost:8089'
-  }));
+  // app.use(cors({
+  //   origin: 'http://localhost:8089'
+  // }));
 
   app.use('/api/user', router_user);
   app.use('/api/group', router_group);

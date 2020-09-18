@@ -1,4 +1,4 @@
-const ExpressServer = url => 'http://localhost:3000' + url;
+const ExpressServer = url => '' + url;
 
 const adminPermission = 3;
 

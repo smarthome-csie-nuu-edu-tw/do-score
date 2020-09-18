@@ -206,6 +206,8 @@ export default {
   margin-top: 1rem;
   > .title {
     color: var(--primary-light-4);
+    display: flex;
+    align-items: center;
   }
   > .content {
     margin-top: 0.6rem;
