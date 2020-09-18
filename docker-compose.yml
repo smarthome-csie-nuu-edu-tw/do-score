@@ -4,14 +4,16 @@ services:
     # mongodb資料庫
     # In your application container, use the hostname mongodb to connect to the MongoDB server
     mongodb:
-      image: 'bitnami/mongodb:4.2'
-      environment:
-        - ALLOW_EMPTY_PASSWORD=yes
-        - MONGODB_ENABLE_IPV6=false
+        image: 'bitnami/mongodb:4.2'
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+            - MONGODB_ENABLE_IPV6=false
 
     backend-api:
         tty: true # Enables debugging capabilities when attached to this container.
-        build: ./Dockerfile.backend-api
+        build: 
+            context: ./
+            dockerfile: Dockerfile.backend-api
         image: 'do-score-master-hw:backend-api'
         #command: npm start
         environment:
@@ -29,7 +31,9 @@ services:
 
     apache-web:
         tty: true # Enables debugging capabilities when attached to this container.
-        build: ./
+        build: 
+            context: ./
+            dockerfile: Dockerfile.web
         image: 'do-score-master-hw:web'
         environment:
             - PORT=3000
