@@ -202,3 +202,30 @@ router.delete('/target/delete', async (req, res) => {
     targets: g.targets
   });
 });
+
+router.post('/target/search', async (req, res) => {
+  const { groupId, username, targetName } = req.body;
+
+  const Group = mongoose.model('Group');
+
+  const g = await Group.findById(ObjectId(groupId))
+    .select('targetFinishedList')
+    .populate('targetFinishedList.member')
+    .populate('targetFinishedList.target')
+    .exec();
+  
+  const newList = g.targetFinishedList.filter(p => {
+    if (!p.passed)
+      return true;
+    if (username && !p.member.username.includes(username))
+      return false;
+    if (targetName && !p.target.name.includes(targetName))
+      return false;
+    return true;
+  });
+
+  res.send({
+    success: true,
+    targetFinishedList: newList
+  });
+});

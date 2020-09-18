@@ -218,6 +218,28 @@ const store = {
         name: 'targets', data: data.targets
       });
     },
+    async searchTarget({ commit, state, rootState }, { username, targetName }) {
+      if (!rootState.user._id)
+        throw new Error('User not login.');
+      const submitData = {
+        groupId: state._id,
+        username, targetName
+      };
+      const res = await fetch(ExpressServer('/api/group/target/search'), {
+        method: 'POST',
+        body: JSON.stringify(submitData),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      });
+      const data = await res.json();
+      if (!data.success)
+        throw new Error('Search target false.');
+      
+      commit('updateAttr', {
+        name: 'targetFinishedList', data: data.targetFinishedList
+      });
+    },
     async applyToJoin({ state, commit, rootState }, { reason }) {
       if (!rootState.user._id)
         throw new Error('User not login.');

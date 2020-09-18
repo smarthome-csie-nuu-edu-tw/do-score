@@ -1,5 +1,5 @@
 <template>
-  <span class="title-input">
+  <span class="cy--icon-input">
     <span class="pretext">
       <slot name="pretext"></slot>
     </span>
@@ -19,12 +19,13 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title-input {
+.cy--icon-input {
   position: relative;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   --input-left-space: 2rem;
+  margin: 0.2rem;
 
   &>.pretext {
     left: 0.2rem;
