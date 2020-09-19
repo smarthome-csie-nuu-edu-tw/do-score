@@ -28,6 +28,8 @@ services:
             - mongodb
         expose:
             - 3000
+        ports:
+            - 3000
 
     apache-web:
         tty: true # Enables debugging capabilities when attached to this container.

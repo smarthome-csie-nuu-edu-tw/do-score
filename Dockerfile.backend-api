@@ -8,22 +8,19 @@ ENV NODE_ENV development
 WORKDIR /usr/src/app
 
 # 複製網站內容程式碼
-COPY ./* /user/src/app/
+COPY ./app /user/src/app
 
 # 複製 package 設定
 #COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn global add @vue/cli
 RUN vue --version
-
 # Project setup
 RUN yarn install 
-
-# Run express server (Production mode)
-#RUN yarn express:run
-
+RUN ls
 # Build (Production mode)
-#RUN yarn build
+RUN cd /usr/src/app && \
+    yarn build
 
 # 安裝必要的套件並移動到專案的 node_modules 底下
 #RUN yarn --production --silent && mv node_modules ../
