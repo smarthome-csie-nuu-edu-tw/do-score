@@ -9,13 +9,12 @@ services:
             - ALLOW_EMPTY_PASSWORD=yes
             - MONGODB_ENABLE_IPV6=false
 
-    backend-api:
+    web:
         tty: true # Enables debugging capabilities when attached to this container.
         build: 
             context: ./
-            dockerfile: Dockerfile.backend-api
-        image: 'do-score-master-hw:backend-api'
-        #command: npm start
+            dockerfile: Dockerfile.web
+        image: 'docker.pkg.github.com/aishimeth2135/hw-web-do-score-master/web'
         environment:
             - PORT=3000
             - NODE_ENV=development
@@ -29,22 +28,4 @@ services:
         expose:
             - 3000
         ports:
-            - 3000
-
-    #apache-web:
-    #    tty: true # Enables debugging capabilities when attached to this container.
-    #    build: 
-    #        context: ./
-    #        dockerfile: Dockerfile.web
-    #    image: 'do-score-master-hw:web'
-    #    environment:
-    #        - PORT=3000
-    #        - NODE_ENV=development
-    #        - SKIP_DB_WAIT=0
-    #        - SKIP_DB_MIGRATION=0
-    #        - SKIP_NPM_INSTALL=0
-    #        - SKIP_BOWER_INSTALL=0
-    #    depends_on:
-    #        - mongodb
-    #    expose:
-    #        - 8089
+            - 32772:3000
