@@ -19,6 +19,6 @@ spec:
       paths:
       - backend:
           serviceName: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}-svc
-          servicePort: 8080
+          servicePort: 3000
         path: "/"
         pathType: "ImplementationSpecific"
