@@ -1,0 +1,35 @@
+stages:
+- name: Publish apache service image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile.web
+      buildContext: .
+      tag: smarthome/${CICD_GIT_REPO_NAME}/${CICD_GIT_REPO_NAME}:${CICD_GIT_BRANCH}-${CICD_GIT_COMMIT}
+      pushRemote: true
+      registry: reg.406.csie.nuu.edu.tw
+    env:
+      PLUGIN_BUILD_ARGS: --progress=tty --network=host
+      PLUGIN_DEBUG: "true"
+      PLUGIN_MIRROR: https://mirror.gcr.io
+- name: deploy-apache-issuer
+  steps:
+  - applyYamlConfig:
+      path: ./k8s-yaml/apache-issuer-production.yaml
+- name: deploy-apache
+  steps:
+  - applyYamlConfig:
+      path: ./k8s-yaml/apache-deployment.yaml
+  - applyYamlConfig:
+      path: ./k8s-yaml/apache-service.yaml
+  - applyYamlConfig:
+      path: ./k8s-yaml/apache-ingress.yaml
+notification:
+  recipients:
+  - recipient: m0724001@gm.nuu.edu.tw
+    notifier: local:n-qvrnk
+  - recipient: aishimeth2135@gmail.com
+    notifier: local:n-qvrnk
+  condition:
+  - Success
+  - Changed
+  - Failed

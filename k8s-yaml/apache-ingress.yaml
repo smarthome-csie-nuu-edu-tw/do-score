@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}-ing
+  namespace: ${CICD_GIT_REPO_NAME}
+  annotations:
+    # 憑證產生
+    # kubernetes.io/ingress.class: "nginx" (microk8s不需要)
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    cert-manager.io/issuer: "letsencrypt-prod-${CICD_GIT_REPO_NAME}"
+spec:
+  tls:
+  - hosts:
+    - "${CICD_GIT_REPO_NAME}.406.csie.nuu.edu.tw"
+    secretName: ${CICD_GIT_REPO_NAME}-406-prod-tls
+  rules:
+  - host: "${CICD_GIT_REPO_NAME}.406.csie.nuu.edu.tw"
+    http:
+      paths:
+      - backend:
+          serviceName: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}-svc
+          servicePort: 8080
+        path: "/"
+        pathType: "ImplementationSpecific"

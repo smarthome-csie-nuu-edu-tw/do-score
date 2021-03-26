@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+  namespace: ${CICD_GIT_REPO_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+  template:
+    metadata:
+      labels:
+        app: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100  
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+              topologyKey: "location"
+      imagePullSecrets:
+      - name: harbor-406
+      containers:
+      - name: web
+        image: ${CICD_IMAGE}:${CICD_GIT_BRANCH}-${CICD_GIT_COMMIT}
+        ports:
+        - containerPort: 3000

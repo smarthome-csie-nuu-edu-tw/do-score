@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}-svc
+  namespace: ${CICD_GIT_REPO_NAME}
+  labels: 
+    app: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+spec:
+  type: ClusterIP
+  selector:
+    app: ${CICD_GIT_REPO_NAME}-${CICD_GIT_BRANCH}
+  ports:
+    - name: webport
+      protocol: TCP
+      port: 3000

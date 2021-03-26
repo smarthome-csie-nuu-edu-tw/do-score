@@ -5,7 +5,7 @@ import schema_group from "./schema/Group.js";
 import schema_group_target from "./schema/Group/Target.js";
 
 export default async function() {
-  await mongoose.connect('mongodb://mongodb:27017/do_score', {
+  await mongoose.connect('mongodb://db_username:db_password@do-score-mongodb:27017/do_score', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
